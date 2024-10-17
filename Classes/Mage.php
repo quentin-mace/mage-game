@@ -43,7 +43,7 @@ class Mage extends Character
         echo $this->name . ' récupère ' . $value . " points de Mana.\n";
         if ($this->maxMana < $this->mana) {
             $this->mana = $this->maxMana;
-            echo $this->name . " à recouvré tout son mana.\n";
+            echo "--> ".$this->name . " à recouvré tout son mana. 🔮\n";
         }
     }
 
@@ -61,10 +61,10 @@ class Mage extends Character
         if (!$this->checkManaAvaliability($manaCost)) {
             exit();
         }
-        echo $this->getName() . " lance un sort sur " . $target->getName() . " !\n";
+        echo "💫 ".$this->getName() . " lance un sort sur " . $target->getName() . " ! 💫\n";
         $this->mana -= $manaCost;
+        echo "--> ".$target->getName() . " pert " . $damage . " PV.\n";
         $target->sufferDamage($damage);
-        echo $target->getName() . " pert " . $damage . " PV.\n";
     }
 
     private function drinkPotion(int $value, string $type): void
@@ -81,13 +81,13 @@ class Mage extends Character
 
     public function drinkHealthPotion(int $value = 100): void
     {
-        echo $this->name . " bois une potion de soin.\n";
+        echo "🧉 ".$this->name . " bois une potion de soin. 💉\n";
         $this->drinkPotion($value, self::HEALTH);
     }
 
     public function drinkManaPotion(int $value = 50): void
     {
-        echo $this->name . " bois une potion de mana.\n";
+        echo "🧉 ".$this->name . " bois une potion de mana. 🌟\n";
         $this->drinkPotion($value, self::MAGIC);
     }
 

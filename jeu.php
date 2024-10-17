@@ -5,20 +5,37 @@ require "Classes/Mage.php";
 require "Classes/Goblin.php";
 require "Classes/Troll.php";
 
-
-function displayMageStatus(string $status, Mage $mage): void
+function displayLine(): void
 {
-    echo "Nom du " . $status . " : " . $mage->getName() . "\n";
-    echo "Points de vie : " . $mage->getHp() . "\n";
-    echo "Points de magie : " . $mage->getMana() . "\n";
-    echo "Force : " . $mage->getStrengh() . "\n";
+    echo "----------------------------\n";
 }
 
-function displayEnemyStatus(string $status, Enemy $mage): void
+function lineBreak(int $number = 1)
 {
-    echo "Nom du " . $status . " : " . $mage->getName() . "\n";
-    echo "Points de vie : " . $mage->getHp() . "\n";
-    echo "Force : " . $mage->getStrengh() . "\n";
+    $count = 0;
+    while($count < $number){
+        echo "\n";
+        $count++;
+    }
+}
+
+function displayTurn(int $number): void
+{
+    echo "#############################\n";
+    echo "########## Tour ".$number." ###########\n";
+    echo "#############################\n";
+}
+
+function displayStatus(Character $character): void
+{
+    displayLine();
+    echo "### Nom : " . $character->getName() . " ###\n";
+    echo "Points de vie : " . $character->getHp() . "\n";
+    if ($character instanceof Mage) {
+        echo "Points de magie : " . $character->getMana() . "\n";
+    }
+    echo "Force : " . $character->getStrength() . "\n";
+    displayLine();
 }
 
 $gandalf = new Mage("Gandalf");
@@ -26,26 +43,30 @@ $goblin1 = new Goblin();
 $goblin2 = new Goblin();
 $troll = new Troll();
 
-displayMageStatus("mage", $gandalf);
-echo "\n";
+echo "########## Heros ##########\n";
+displayStatus($gandalf);
+lineBreak(2);
+echo "########## Énnemis ##########\n";
+displayLine();
 echo "Ennemi 1 : \n";
-displayEnemyStatus("enemy", $goblin1);
-echo "\n";
+displayStatus($goblin1);
+echo "Ennemi 2 : \n";
+displayStatus($troll);
+lineBreak(2);
+
+displayTurn(1);
 $goblin1->attack($gandalf);
-echo "\n";
-echo "Ennemi 2 :\n";
-displayEnemyStatus("ennemy", $troll);
-echo "\n";
+lineBreak();
 $troll->attack($gandalf);
-echo "\n";
-echo "\n";
+lineBreak(2);
 $gandalf->drinkHealthPotion();
-echo "\n";
+lineBreak();
 $gandalf->attack($goblin1);
+lineBreak();
 $gandalf->useMagic($troll, 20, 50);
-echo "\n";
+lineBreak();
 $gandalf->drinkManaPotion();
-echo "\n";
-echo "\n";
-displayMageStatus("mage", $gandalf);
-echo "\n";
+lineBreak(2);
+echo "##### Combattants restant #####\n";
+displayStatus($gandalf);
+lineBreak();

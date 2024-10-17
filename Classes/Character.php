@@ -68,7 +68,7 @@ abstract class Character
         $this->hp = $this->hp - $damage;
         if ($this->hp <= 0) {
             $this->hp = 0;
-            echo $this->name." est mort.";
+            echo $this->name." est mort. ☠️\n";
         }
     }
 
@@ -78,15 +78,15 @@ abstract class Character
         echo $this->name . ' se soigne de ' . $value . " PV.\n";
         if ($this->maxHp < $this->hp) {
             $this->hp = $this->maxHp;
-            echo $this->name . " à recouvré tout ses PV.\n";
+            echo "--> ".$this->name . " à recouvré tout ses PV. ❤️‍\n";
         }
     }
 
     public function attack(Character $target): void
     {
-        echo $this->getName() . " attaque " . $target->getName() . " !\n";
+        echo "⚔️ ".$this->getName() . " attaque " . $target->getName() . " ! ⚔️\n";
+        echo "--> ".$target->getName() . " pert " . $this->strength . " PV. 🩸\n";
         $target->sufferDamage($this->strength);
-        echo $target->getName() . " pert " . $this->strength . " PV.\n";
     }
 
 }
