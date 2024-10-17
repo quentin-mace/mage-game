@@ -3,9 +3,9 @@
 abstract class Character
 {
 
-    private string $name;
+    protected string $name;
     private int $hp;
-    private int $maxHp;
+    protected int $maxHp;
     private int $strengh;
 
     public function __construct(

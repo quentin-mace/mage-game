@@ -13,7 +13,7 @@ class Mage extends Character
         int $strength = 20
     ) {
         parent::__construct($name, $maxHp, $strength);
-        $this->mana = $mana;
+        $this->mana = $maxMana;
         $this->maxMana = $maxMana;
     }
 
