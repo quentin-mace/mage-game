@@ -74,8 +74,8 @@ class Mage extends Character
     public function attack(Mage|Enemy $target): void
     {
         echo $this->getName() . " attaque " . $target->getName() . " !\n";
-        $target->sufferDamage($this->strengh);
-        echo $target->getName() . " pert " . $this->strengh . " PV.\n";
+        $target->sufferDamage($this->strength);
+        echo $target->getName() . " pert " . $this->strength . " PV.\n";
     }
 
     public function useMagic(Mage|Enemy $target, int $manaCost, int $damage): void

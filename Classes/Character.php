@@ -6,7 +6,7 @@ abstract class Character
     protected string $name;
     private int $hp;
     protected int $maxHp;
-    protected int $strengh;
+    protected int $strength;
 
     public function __construct(
         string $name,
@@ -16,7 +16,7 @@ abstract class Character
         $this->name = $name;
         $this->hp = $maxHp;
         $this->maxHp = $maxHp;
-        $this->strengh = $strength;
+        $this->strength = $strength;
     }
 
     public function getName(): string
@@ -52,14 +52,14 @@ abstract class Character
         return $this;
     }
 
-    public function getStrengh(): int
+    public function getStrength(): int
     {
-        return $this->strengh;
+        return $this->strength;
     }
 
-    public function setStrengh(int $strengh): Enemy
+    public function setStrength(int $strength): Enemy
     {
-        $this->strengh = $strengh;
+        $this->strength = $strength;
         return $this;
     }
 
@@ -81,8 +81,8 @@ abstract class Character
     public function attack(Mage $target): void
     {
         echo $this->getName() . " attaque " . $target->getName() . " !\n";
-        $target->sufferDamage($this->strengh);
-        echo $target->getName() . " pert " . $this->strengh . " PV.\n";
+        $target->sufferDamage($this->strength);
+        echo $target->getName() . " pert " . $this->strength . " PV.\n";
     }
 
 }
