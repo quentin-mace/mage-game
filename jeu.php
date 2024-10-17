@@ -1,6 +1,7 @@
 <?php
-require "Classes/Mage.php";
+require "Classes/Character.php";
 require "Classes/Enemy.php";
+require "Classes/Mage.php";
 require "Classes/Goblin.php";
 require "Classes/Troll.php";
 

@@ -6,7 +6,7 @@ abstract class Character
     protected string $name;
     private int $hp;
     protected int $maxHp;
-    private int $strengh;
+    protected int $strengh;
 
     public function __construct(
         string $name,
