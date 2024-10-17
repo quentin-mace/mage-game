@@ -24,7 +24,7 @@ abstract class Character
         return $this->name;
     }
 
-    public function setName(string $name): Enemy
+    public function setName(string $name): Character
     {
         $this->name = $name;
         return $this;
@@ -35,7 +35,7 @@ abstract class Character
         return $this->hp;
     }
 
-    public function setHp(int $hp): Enemy
+    public function setHp(int $hp): Character
     {
         $this->hp = $hp;
         return $this;
@@ -46,7 +46,7 @@ abstract class Character
         return $this->maxHp;
     }
 
-    public function setMaxHp(int $maxHp): Enemy
+    public function setMaxHp(int $maxHp): Character
     {
         $this->maxHp = $maxHp;
         return $this;
@@ -57,7 +57,7 @@ abstract class Character
         return $this->strength;
     }
 
-    public function setStrength(int $strength): Enemy
+    public function setStrength(int $strength): Character
     {
         $this->strength = $strength;
         return $this;
@@ -66,9 +66,13 @@ abstract class Character
     public function sufferDamage(int $damage): void
     {
         $this->hp = $this->hp - $damage;
+        if ($this->hp <= 0) {
+            $this->hp = 0;
+            echo $this->name." est mort.";
+        }
     }
 
-    private function heal(int $value): void
+    protected function heal(int $value): void
     {
         $this->hp = $this->hp + $value;
         echo $this->name . ' se soigne de ' . $value . " PV.\n";
@@ -78,7 +82,7 @@ abstract class Character
         }
     }
 
-    public function attack(Mage $target): void
+    public function attack(Character $target): void
     {
         echo $this->getName() . " attaque " . $target->getName() . " !\n";
         $target->sufferDamage($this->strength);

@@ -37,21 +37,6 @@ class Mage extends Character
         $this->maxMana = $maxMana;
     }
 
-    public function sufferDamage(int $damage): void
-    {
-        $this->hp = $this->hp - $damage;
-    }
-
-    private function heal(int $value): void
-    {
-        $this->hp = $this->hp + $value;
-        echo $this->name . ' se soigne de ' . $value . " PV.\n";
-        if ($this->maxHp < $this->hp) {
-            $this->hp = $this->maxHp;
-            echo $this->name . " à recouvré tout ses PV.\n";
-        }
-    }
-
     private function healMana(int $value): void
     {
         $this->mana = $this->mana + $value;
@@ -71,14 +56,7 @@ class Mage extends Character
         return true;
     }
 
-    public function attack(Mage|Enemy $target): void
-    {
-        echo $this->getName() . " attaque " . $target->getName() . " !\n";
-        $target->sufferDamage($this->strength);
-        echo $target->getName() . " pert " . $this->strength . " PV.\n";
-    }
-
-    public function useMagic(Mage|Enemy $target, int $manaCost, int $damage): void
+    public function useMagic(Character $target, int $manaCost, int $damage): void
     {
         if (!$this->checkManaAvaliability($manaCost)) {
             exit();
