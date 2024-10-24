@@ -7,6 +7,7 @@ abstract class Character
     private int $hp;
     protected int $maxHp;
     protected int $strength;
+    private bool $isAlive;
 
     public function __construct(
         string $name,
@@ -17,6 +18,7 @@ abstract class Character
         $this->hp = $maxHp;
         $this->maxHp = $maxHp;
         $this->strength = $strength;
+        $this->isAlive = true;
     }
 
     public function getName(): string
@@ -63,13 +65,25 @@ abstract class Character
         return $this;
     }
 
+    public function isAlive(): bool
+    {
+        return $this->isAlive;
+    }
+
+    public function setIsAlive(bool $isAlive): Character
+    {
+        $this->isAlive = $isAlive;
+        return $this;
+    }
+
     public function sufferDamage(int $damage): void
     {
         echo $this->generateHitMessage();
-        echo "--> ".$this->getName() . " pert " . $this->strength . " PV. 🩸\n";
+        echo "--> ".$this->getName() . " pert " . $damage . " PV. 🩸\n";
         $this->hp = $this->hp - $damage;
         if ($this->hp <= 0) {
             $this->hp = 0;
+            $this->isAlive = false;
             echo $this->name." est mort. ☠️\n";
         }
     }

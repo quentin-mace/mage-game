@@ -19,11 +19,84 @@ function lineBreak(int $number = 1)
     }
 }
 
-function displayTurn(int $number): void
+function turnLoop(int $turnNumber, Mage $mage, Enemy $enemy): void
 {
     echo "#############################\n";
-    echo "########## Tour ".$number." ###########\n";
+    echo "########## Tour ".$turnNumber." ###########\n";
     echo "#############################\n";
+
+    lineBreak();
+
+    echo $mage->getName().", que souhaitez vous faire ?\n";
+    echo "1 - ⚔️ Attaquer !\n";
+    echo "2 - 💫 Lancer un sort !\n";
+    echo "3 - 🍷 Boire une potion de soin.\n";
+    echo "4 - 🍵 Boire une potion de mana.\n";
+
+    $input = getInput();
+    switch ($input) {
+        case 1:
+            $mage->attack($enemy);
+            break;
+        case 2:
+            $mage->useMagic($enemy, 20, 30);
+            break;
+        case 3:
+            $mage->drinkHealthPotion(50);
+            break;
+        case 4:
+            $mage->drinkManaPotion(50);
+            break;
+        default:
+            die('fatal error : invalid input');
+            break;
+    }
+
+    lineBreak();
+
+    if ($enemy->isAlive()) {
+        $enemy->attack($mage);
+    }
+
+    roundSummary($mage, $enemy);
+
+    lineBreak();
+}
+
+function roundSummary(Mage $mage, Enemy $enemy): void
+{
+    echo "\n### Fin du tour ###\n";
+
+    displayStatus($mage);
+    displayStatus($enemy);
+
+    lineBreak();
+    displayLine();
+}
+
+function getInput(): int
+{
+    while (true) {
+        $fin = fopen ("php://stdin","r");
+        $line = fgets($fin);
+        switch ($line){
+            case "1":
+                return 1;
+                break;
+            case "2":
+                return 2;
+                break;
+            case "3":
+                return 3;
+                break;
+            case "4":
+                return 4;
+                break;
+            default:
+                break;
+        }
+
+    }
 }
 
 function displayStatus(Character $character): void
@@ -39,34 +112,36 @@ function displayStatus(Character $character): void
 }
 
 $gandalf = new Mage("Gandalf");
-$goblin1 = new Goblin();
-$goblin2 = new Goblin();
 $troll = new Troll();
+$hero = $gandalf;
+$enemies = [$troll];
+$turnCounter = 0;
 
-echo "########## Heros ##########\n";
-displayStatus($gandalf);
+echo "########## Hero ###########\n";
+displayStatus($hero);
 lineBreak(2);
+
+
 echo "########## Énnemis ##########\n";
-displayLine();
-echo "Ennemi 1 : \n";
-displayStatus($goblin1);
-echo "Ennemi 2 : \n";
-displayStatus($troll);
-lineBreak(2);
+foreach ($enemies as $enemy){
+    displayLine();
+    echo "Ennemi : \n";
+    displayStatus($enemy);
+    lineBreak();
+}
 
-displayTurn(1);
-$goblin1->attack($gandalf);
+do{
+    $turnCounter++;
+    turnLoop($turnCounter, $hero, $enemies[0]);
+    if (!$enemies[0]->isAlive()){
+        array_splice($enemies, 0, 1);
+    }
+}while($hero->isAlive() && count($enemies)>0);
+
 lineBreak();
-$troll->attack($gandalf);
-lineBreak(2);
-$gandalf->drinkHealthPotion();
+
+echo "⭐⭐⭐⭐⭐⭐⭐⭐ Vous avez gagné !! ⭐⭐⭐⭐⭐⭐⭐⭐";
+
 lineBreak();
-$gandalf->attack($goblin1);
-lineBreak();
-$gandalf->useMagic($troll, 20, 50);
-lineBreak();
-$gandalf->drinkManaPotion();
-lineBreak(2);
-echo "##### Combattants restant #####\n";
-displayStatus($gandalf);
-lineBreak();
+
+
