@@ -65,6 +65,8 @@ abstract class Character
 
     public function sufferDamage(int $damage): void
     {
+        echo $this->generateHitMessage();
+        echo "--> ".$this->getName() . " pert " . $this->strength . " PV. 🩸\n";
         $this->hp = $this->hp - $damage;
         if ($this->hp <= 0) {
             $this->hp = 0;
@@ -84,9 +86,30 @@ abstract class Character
 
     public function attack(Character $target): void
     {
-        echo "⚔️ ".$this->getName() . " attaque " . $target->getName() . " ! ⚔️\n";
-        echo "--> ".$target->getName() . " pert " . $this->strength . " PV. 🩸\n";
+        echo $this->generateAttackMessage();
         $target->sufferDamage($this->strength);
+    }
+
+    private function generateAttackMessage(): string
+    {
+        $messages = [
+            "🗡️  {$this->getName()} bondit et attaque sans pitié...\n",
+            "💥 {$this->getName()} envoie un puissant coup !\n",
+            "⚔️  {$this->getName()} attaque avec une rage inexpliquée...\n",
+        ];
+
+        return $messages[array_rand($messages)];
+    }
+
+    private function generateHitMessage(): string
+    {
+        $messages = [
+            "🫸  {$this->getName()} est repoussé par l'assaut.\n",
+            "🤸  {$this->getName()} trébuche et tombe au sol !\n",
+            "🤼‍♂️  {$this->getName()} essaie en vain de bloquer l'attaque...\n",
+        ];
+
+        return $messages[array_rand($messages)];
     }
 
 }

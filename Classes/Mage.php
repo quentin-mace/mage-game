@@ -61,10 +61,20 @@ class Mage extends Character
         if (!$this->checkManaAvaliability($manaCost)) {
             exit();
         }
-        echo "💫 ".$this->getName() . " lance un sort sur " . $target->getName() . " ! 💫\n";
+        echo $this->generateSpellAttackMessage();
         $this->mana -= $manaCost;
-        echo "--> ".$target->getName() . " pert " . $damage . " PV.\n";
         $target->sufferDamage($damage);
+    }
+
+    private function generateSpellAttackMessage(): string
+    {
+        $messages = [
+            "💫 {$this->getName()} lève son baton, et 3 projectiles magiques scintillants volent.\n",
+            "🔥 {$this->getName()} envoie une puissante boule de feu !\n",
+            "🌬️ {$this->getName()} fait appel à la furie des vents...\n",
+        ];
+
+        return $messages[array_rand($messages)];
     }
 
     private function drinkPotion(int $value, string $type): void
